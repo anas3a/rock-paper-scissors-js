@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8" />
+</head>
+
+<body>
+    <script>
+        console.log("Hello, World!");
+
+        function game() {
+            function computerPlay() {
+                let randomNumber = Math.floor(Math.random() * 3) + 1;
+                if (randomNumber == 1)
+                    return "Rock";
+                else if (randomNumber == 2)
+                    return "Paper";
+                else if (randomNumber == 3)
+                    return "Scissors";
+            }
+            function playRound(playerSelection, computerSelection) {
+                let playerWinning = false, draw = false;
+
+                playerSelection.toLowerCase();
+                playerSelection[0].toUpperCase;
+
+                if (playerSelection == computerSelection)
+                    draw = true;
+                else if (playerSelection == "Rock" && computerSelection == "Scissors")
+                    playerWinning = true;
+                else if (playerSelection == "Paper" && computerSelection == "Rock")
+                    playerWinning = true;
+                else if (playerSelection == "Scissors" && computerSelection == "Paper")
+                    playerWinning = true;
+
+                if (draw)
+                    return "Draw!";
+                else if (playerWinning)
+                    return "You Win! " + playerSelection + " beats " + computerSelection;
+                else
+                    return "You Lose! " + computerSelection + " beats " + playerSelection;
+            }
+            let playerSelection = window.prompt("Write Rock or Paper or Scissors", "Rock");
+            let computerSelection = computerPlay();
+            window.alert(playRound(playerSelection, computerSelection));
+        }
+
+        for (let i = 0; i < 5; i++)
+            game();
+    </script>
+</body>
+
+</html>
