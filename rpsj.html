@@ -7,48 +7,86 @@
 </head>
 
 <body>
+
+    <div>
+        <button>Rock</button>
+        <button>Paper</button>
+        <button>Scissors</button>
+    </div>
+
+    <div>
+        <br>
+        <br>
+        <p id="draw_output"></p>
+        <b id="user_score"></b>
+        <br>
+        <br>
+        <b id="pc_score"></b>
+    </div>
+
     <script>
-        console.log("Hello, World!");
 
-        function game() {
-            function computerPlay() {
-                let randomNumber = Math.floor(Math.random() * 3) + 1;
-                if (randomNumber == 1)
-                    return "Rock";
-                else if (randomNumber == 2)
-                    return "Paper";
-                else if (randomNumber == 3)
-                    return "Scissors";
-            }
-            function playRound(playerSelection, computerSelection) {
-                let playerWinning = false, draw = false;
+        let userScore = 0, computerScore = 0;
+        const userScoreDisplay = document.querySelector('#user_score');
+        const pcScoreDisplay = document.querySelector('#pc_score');
 
-                playerSelection.toLowerCase();
-                playerSelection[0].toUpperCase;
+        userScoreDisplay.innerText = `Your score = ${userScore}`;
+        pcScoreDisplay.innerText = `Computer score = ${computerScore}`;
 
-                if (playerSelection == computerSelection)
-                    draw = true;
-                else if (playerSelection == "Rock" && computerSelection == "Scissors")
-                    playerWinning = true;
-                else if (playerSelection == "Paper" && computerSelection == "Rock")
-                    playerWinning = true;
-                else if (playerSelection == "Scissors" && computerSelection == "Paper")
-                    playerWinning = true;
-
-                if (draw)
-                    return "Draw!";
-                else if (playerWinning)
-                    return "You Win! " + playerSelection + " beats " + computerSelection;
-                else
-                    return "You Lose! " + computerSelection + " beats " + playerSelection;
-            }
-            let playerSelection = window.prompt("Write Rock or Paper or Scissors", "Rock");
-            let computerSelection = computerPlay();
-            window.alert(playRound(playerSelection, computerSelection));
+        function computerPlay() {
+            let randomNumber = Math.floor(Math.random() * 3) + 1;
+            if (randomNumber == 1)
+                return "Rock";
+            else if (randomNumber == 2)
+                return "Paper";
+            else if (randomNumber == 3)
+                return "Scissors";
         }
 
-        for (let i = 0; i < 5; i++)
-            game();
+        function playRound(e) {
+
+            let playerSelection = e.target.innerText;
+            let computerSelection = computerPlay();
+            let playerWinning = false, draw = false;
+
+            document.querySelector('#draw_output').innerText = '';
+            if (playerSelection == computerSelection)
+                draw = true;
+            else if (playerSelection == "Rock" && computerSelection == "Scissors")
+                playerWinning = true;
+            else if (playerSelection == "Paper" && computerSelection == "Rock")
+                playerWinning = true;
+            else if (playerSelection == "Scissors" && computerSelection == "Paper")
+                playerWinning = true;
+
+            let output;
+            if (draw)
+                document.querySelector('#draw_output').innerText = 'Draw! no score for anyone';
+            else if (playerWinning)
+                userScore++;
+            else
+                computerScore++;
+            userScoreDisplay.innerText = `Your score = ${userScore}`;
+            pcScoreDisplay.innerText = `Computer score = ${computerScore}`;
+
+            if (userScore == 5 || computerScore == 5) {
+                if (userScore > computerScore)
+                    alert('You win this round!');
+                else
+                    alert('computer defeated you');
+                userScore = computerScore = 0;
+
+                userScoreDisplay.innerText = `Your score = ${userScore}`;
+                pcScoreDisplay.innerText = `Computer score = ${computerScore}`;
+            }
+
+        }
+
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', playRound)
+        });
+
     </script>
 </body>
 
